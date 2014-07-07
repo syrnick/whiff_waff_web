@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% raw %}
+<div class="container-fluid">
+  <div ng-app="ros">
+
+    <h1 class="page-header">Whiff Waff ROBOT CONTROL</h1>
+
+    <!-- ros-ws="ws://localhost:9090" is optional. localhost:9090 is the default -->
+    <!-- ros-namespace="/not-implemented-yet" isn't implemented yet-->
+    <div ros-ws="ws://10.0.1.22:9090" ros-namespace="/not-implemented-yet">
+      <div class="row-fluid">
+        <div class="col-md-2">
+          <div ros-topic="/shooter/system" ros-message-type="robot_pong/System">
+            <div ng-controller="TopicPublisherCtl" >
+              <h3>POWER:</h3>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({on: true})">ON</button>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({on: false})">OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div ros-topic="/shooter/shooter" ros-message-type="robot_pong/ShooterSpeed">
+            <div ng-controller="ShooterSpeedCtrl" >
+              <h3>ROLLERS:</h3>
+
+              Left: <input ng-model="message.left_shooter_speed" size="3">
+              Right: <input ng-model="message.right_shooter_speed" size="3">
+              <button class="btn btn-small btn-primary" ng-click="sendMessage()">SEND</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div ros-topic="/shooter/hopper" ros-message-type="robot_pong/System">
+            <div ng-controller="TopicPublisherCtl" >
+              <h3>HOPPER:</h3>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({on: true})">ON</button>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({on: false})">OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div ros-topic="/srv/hopper_goal" ros-message-type="robot_pong/HopperGoal">
+            <div ng-controller="TopicPublisherCtl" >
+              <h3>PUSHER:</h3>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({action: 3})">SHOOT</button>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({action: 0})">OFF</button>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({action: 1})">LOCK</button>
+              <button class="btn btn-small btn-primary" ng-click="sendMessage({action: 2})">OPEN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div >
+        <div class="row-fluid">
+          <div class="col-md-12">
+            <div ros-topic="/shooter/chatter" ros-message-type="std_msgs/String">
+              <div ng-controller="TopicListnerCtl" >
+                <h4>STATUS</h4>
+                <span>{{messages[messages.length-1].data}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="col-md-12">
+          <h3>Video feed</h3>
+          <iframe width="640" height="480" src="http://10.0.1.22:8888/streams/camera/rgb/image_color.webm?enc=webm&bitrate=100000000&framerate=5&gop=1">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endraw %}
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="/static/bower/angular-slider/angular-slider.css">
+{% endblock %}
+
+{% block page_js %}
+<script src="/static/bower/angular/angular.js"></script>
+<script src="/static/bower/angular-slider/angular-slider.js"></script>
+
+<script src="/static/bower/easeljs/lib/easeljs-0.7.1.combined.js"></script>
+<script src="/static/bower/eventemitter2/lib/eventemitter2.js"></script>
+
+<script src="/static/bower/roslibjs/build/roslib.js"></script>
+<script src="/static/bower/ros2djs/build/ros2d.js"></script>
+<script src="/static/bower/angular-ros/build/angular-ros.js"></script>
+
+<script src="/static/js/ww_control.js"></script>
+{% endblock %}
