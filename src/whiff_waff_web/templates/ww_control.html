@@ -12,7 +12,7 @@
     <div ros-ws="ws://10.0.1.22:9090" ros-namespace="/not-implemented-yet">
       <div class="row-fluid">
         <div class="col-md-2">
-          <div ros-topic="/shooter/system" ros-message-type="robot_pong/System">
+          <div ros-topic="/shooter/system" ros-message-type="whiff_waff_msgs/System">
             <div ng-controller="TopicPublisherCtl" >
               <h3>POWER:</h3>
               <button class="btn btn-small btn-primary" ng-click="sendMessage({on: true})">ON</button>
@@ -22,7 +22,7 @@
         </div>
 
         <div class="col-md-4">
-          <div ros-topic="/shooter/shooter" ros-message-type="robot_pong/ShooterSpeed">
+          <div ros-topic="/shooter/shooter" ros-message-type="whiff_waff_msgs/ShooterSpeed">
             <div ng-controller="ShooterSpeedCtrl" >
               <h3>ROLLERS:</h3>
 
@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-md-2">
-          <div ros-topic="/shooter/hopper" ros-message-type="robot_pong/System">
+          <div ros-topic="/shooter/hopper" ros-message-type="whiff_waff_msgs/System">
             <div ng-controller="TopicPublisherCtl" >
               <h3>HOPPER:</h3>
               <button class="btn btn-small btn-primary" ng-click="sendMessage({on: true})">ON</button>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-md-4">
-          <div ros-topic="/srv/hopper_goal" ros-message-type="robot_pong/HopperGoal">
+          <div ros-topic="/srv/hopper_goal" ros-message-type="whiff_waff_msgs/HopperGoal">
             <div ng-controller="TopicPublisherCtl" >
               <h3>PUSHER:</h3>
               <button class="btn btn-small btn-primary" ng-click="sendMessage({action: 3})">SHOOT</button>
